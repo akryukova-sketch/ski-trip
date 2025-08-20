@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>Японский Экстрим: Культурный Фрирайд</title>
+    <style>
+        html, body {
+            margin: 0; padding: 0; height: 100%;
+            font-family: Arial, sans-serif;
+            overflow-y: auto;
+        }
+        body {
+            background: url('img/Photo1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            color: #fff;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(106, 122, 159, 0.75);
+            z-index: 0;
+        }
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 40px auto 60px auto;
+            padding: 30px 40px;
+            background-color: rgba(11, 23, 71, 0.7);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            overflow: auto;
+        }
+
+        /* Фотоколлекция в стиле Instagram Stories */
+        .photo-row-wrapper {
+            position: relative;
+            max-width: 100%;
+            margin-bottom: 30px;
+        }
+        .photo-row {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 15px;
+            padding: 10px 50px;
+            scrollbar-width: none;
+        }
+        .photo-row::-webkit-scrollbar {
+            display: none;
+        }
+        .photo-row img {
+            height: 400px;
+            border-radius: 20px;
+            object-fit: cover;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        .photo-row img:hover {
+            transform: scale(1.05);
+            z-index: 2;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+        }
+
+        /* Стрелки по бокам */
+        .arrow-left, .arrow-right {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 70px;
+            background: rgba(0,0,0,0.35);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: background 0.3s ease;
+            user-select: none;
+        }
+        .arrow-left:hover, .arrow-right:hover {
+            background: rgba(0,0,0,0.6);
+        }
+        .arrow-left {
+            left: 5px;
+        }
+        .arrow-right {
+            right: 5px;
+        }
+        .arrow-left svg, .arrow-right svg {
+            fill: white;
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Заголовки и текст */
+        h1 {
+            font-size: 2em;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        section h2 {
+            text-align: center;
+            color: #aec6cf;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        p, ul {
+            font-size: 1.05em;
+            line-height: 1.5;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .schedule {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .calendar {
+            margin: 10px 0 20px 0;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.05em;
+        }
+        form {
+            margin-top: 30px;
+            text-align: center;
+        }
+        input[type="email"] {
+            width: 80%;
+            max-width: 350px;
+            padding: 8px;
+            border-radius: 4px;
+            border: none;
+            font-size: 1.05em;
+        }
+        input[type="submit"] {
+            padding: 8px 15px;
+            background-color: #33509e;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 1.05em;
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #ddd;
+            text-align: center;
+        }
+
+        /* Организаторы */
+        .organizers {
+            display: flex;
+            gap: 50px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        .organizer-item {
+            text-align: center;
+            max-width: 160px;
+        }
+        .circle-img-large {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+            margin: 0 auto 12px auto;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .circle-img-large:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+        }
+        .organizer-name {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 4px;
+        }
+        .organizer-role {
+            font-size: 0.95em;
+            color: #c0c8d7;
+            line-height: 1.3;
+        }
+
+        /* Партнёры */
+        .partners {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        .partner-logo {
+            width: 70px;
+            height: auto;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .partner-logo:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.7);
+        }
+
+        /* Календарь */
+        .calendar-widget {
+            max-width: 380px;
+            margin: 20px auto 40px auto;
+            background-color: rgba(255,255,255,0.15);
+            border-radius: 10px;
+            padding: 15px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        .calendar-widget .month-year {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-bottom: 8px;
+        }
+        .calendar-widget .weekdays, .calendar-widget .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+        }
+        .calendar-widget .weekdays div {
+            font-weight: 600;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(255,255,255,0.35);
+        }
+        .calendar-widget .days div {
+            padding: 10px 0;
+            margin: 2px 1px;
+            border-radius: 6px;
+        }
+        .calendar-widget .days div.empty {
+            background: transparent;
+            pointer-events: none;
+        }
+        .calendar-widget .days div.highlight {
+            background-color: #aec6cf;
+            color: #000;
+            font-weight: bold;
+            box-shadow: 0 0 6px 2px rgba(174,198,207,0.7);
+            cursor: default;
+        }
+        @media (max-width: 768px) {
+            .content-wrapper {
+                margin: 20px 15px;
+                padding: 20px 25px;
+            }
+            .circle-img-large {
+                width: 100px;
+                height: 100px;
+            }
+            .partner-logo {
+                width: 60px;
+            }
+            .photo-row img {
+                height: 280px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            section h2 {
+                font-size: 1.1em;
+            }
+            p, ul {
+                font-size: 1em;
+            }
+            input[type="email"], input[type="submit"] {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+
+        <!-- Название программы над фотогалереей -->
+        <h1>Японский Экстрим: Культурный Фрирайд</h1>
+
+        <!-- Фотоколлекция в стиле Instagram Stories с навигационными стрелками -->
+        <div class="photo-row-wrapper">
+            <div class="arrow-left" id="arrowLeft" aria-label="Смотреть фотографии назад" tabindex="0">
+                <svg viewBox="0 0 24 24"><path d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+            </div>
+            <div class="photo-row" id="photoRow">
+                <img src="img/Photo1.jpg" alt="Фото 1" />
+                <img src="img/Photo4.jpg" alt="Фото 4" />
+                <img src="img/Photo5.jpg" alt="Фото 5" />
+                <img src="img/Photo6.jpg" alt="Фото 6" />
+                <img src="img/Photo7.jpg" alt="Фото 7" />
+                <img src="img/Photo8.jpg" alt="Фото 8" />
+                <img src="img/Photo9.jpg" alt="Фото 9" />
+                <img src="img/Photo10.jpg" alt="Фото 10" />
+                <img src="img/Photo11.jpg" alt="Фото 11" />
+                <img src="img/Photo12.jpg" alt="Фото 12" />
+                <img src="img/Photo13.jpg" alt="Фото 13" />
+            </div>
+            <div class="arrow-right" id="arrowRight" aria-label="Смотреть фотографии вперед" tabindex="0">
+                <svg viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+            </div>
+        </div>
+
+        <section>
+            <h2>Организаторы</h2>
+            <div class="organizers">
+                <div class="organizer-item">
+                    <img src="img/Photo2.jpg" alt="Анна Крюкова" class="circle-img-large" />
+                    <div class="organizer-name">Анна Крюкова</div>
+                    <div class="organizer-role">Инструктор НЛИ уровень Б (лыжи)</div>
+                </div>
+                <div class="organizer-item">
+                    <img src="img/Photo3.jpg" alt="Елизавета Касьянова" class="circle-img-large" />
+                    <div class="organizer-name">Елизавета Касьянова</div>
+                    <div class="organizer-role">Инструктор НЛИ уровень Б (сноуборд)</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Партнёры</h2>
+            <div class="partners">
+                <img src="img/partner1logo.png" alt="Партнер 1" class="partner-logo" />
+                <img src="img/partner2logo.png" alt="Партнер 2" class="partner-logo" />
+            </div>
+        </section>
+
+        <h2>О регионе катания — остров Хоккайдо</h2>
+        <p>
+            Средняя толщина снежного покрова: около 10 метров за зимний сезон.<br />
+            Количество курортов: более 20, включая Нисеко, Кироро, Рисуцу.<br />
+            Средний перепад высот: 300-1200 метров.<br />
+            Хоккайдо — северный остров Японии с богатой природой и гостеприимными жителями.
+        </p>
+
+        <h2>Ключевые пункты программы</h2>
+        <ul>
+            <li>Количество человек в группе: от 5</li>
+            <li>Количество гидов: 2</li>
+            <li>Проживание: Большой уютный дом в Нисеко</li>
+            <li>Места катания: Нисеко Виладж, Хирафу, Аннупури, Ханазоно, Кироро, Рисуцу</li>
+            <li>Стоимость: 6000 USD</li>
+        </ul>
+
+        <h2>Запланированные активности (входят в стоимость)</h2>
+        <ul>
+            <li>Лучшие рестораны азиатской кухни</li>
+            <li>Мастер-классы японской кухни</li>
+            <li>Поездка в Саппоро</li>
+            <li>Купание в горячих источниках онсен</li>
+        </ul>
+
+        <h2>Дополнительные активности (не входят в стоимость)</h2>
+        <ul>
+            <li>Фрирайд на ратраке</li>
+            <li>Молочная ферма Кобо</li>
+            <li>Лучшая итальянская выпечка</li>
+            <li>Дегустация виски</li>
+        </ul>
+
+        <h2>Примерный распорядок дня</h2>
+        <div class="schedule">
+            <p>
+                Подъем — 7:30<br />
+                Завтрак — 7:45-8:00<br />
+                Зарядка — 8:30<br />
+                Выход на курорт — 9:00<br />
+                Катание — 10:00-16:00<br />
+                Обед — 13:00<br />
+                Возвращение домой — 16:30<br />
+                Онсен — 17:00-18:00<br />
+                Ужин суши — 19:00<br />
+                Караоке — 21:00
+            </p>
+        </div>
+
+        <h2>Календарь выездов — Январь 2025</h2>
+        <div class="calendar-widget">
+            <div class="month-year">Январь 2025</div>
+            <div class="weekdays">
+                <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
+            </div>
+            <div class="days">
+                <div class="empty"></div>
+                <div class="empty"></div>
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+
+                <div>6</div>
+                <div>7</div>
+                <div class="highlight">8</div>
+                <div class="highlight">9</div>
+                <div class="highlight">10</div>
+                <div class="highlight">11</div>
+                <div class="highlight">12</div>
+
+                <div class="highlight">13</div>
+                <div class="highlight">14</div>
+                <div class="highlight">15</div>
+                <div class="highlight">16</div>
+                <div class="highlight">17</div>
+                <div>18</div>
+                <div>19</div>
+
+                <div>20</div>
+                <div>21</div>
+                <div>22</div>
+                <div>23</div>
+                <div>24</div>
+                <div>25</div>
+                <div>26</div>
+
+                <div>27</div>
+                <div>28</div>
+                <div>29</div>
+                <div>30</div>
+                <div>31</div>
+                <div class="empty"></div>
+                <div class="empty"></div>
+            </div>
+        </div>
+
+        <div class="calendar">Даты выезда: 9-16 января, 16-23 января</div>
+
+        <h2>Заявка на участие</h2>
+        <form>
+            <label for="email">Введите ваш email:</label><br />
+            <input type="email" id="email" name="email" placeholder="example@mail.com" required />
+            <input type="submit" value="Отправить" />
+        </form>
+
+        <footer>
+            <p>
+                Контакты:<br />
+                Телефон: +7 926 616 79 15<br />
+                Адрес: г. Москва, Карамышевская наб. 48-3-78
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        const photoRow = document.getElementById('photoRow');
+        const arrowLeft = document.getElementById('arrowLeft');
+        const arrowRight = document.getElementById('arrowRight');
+
+        const scrollAmount = 320;
+
+        arrowLeft.addEventListener('click', () => {
+            photoRow.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        });
+        arrowRight.addEventListener('click', () => {
+            photoRow.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        });
+
+        [arrowLeft, arrowRight].forEach(arrow => {
+            arrow.addEventListener('keydown', e => {
+                if(e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    arrow.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
