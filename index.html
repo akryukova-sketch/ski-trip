@@ -12,25 +12,33 @@
     --gilded-gold: #FFD700;
     --vibrant-scarlet: #DC143C;
   }
-  * { box-sizing: border-box; }
-  body, html {
-    margin: 0; padding: 0; height: 100%;
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    overflow-x: hidden;
+    height: 100%;
     background: var(--deep-navy);
     color: var(--snow-white);
     font-family: 'Montserrat', sans-serif;
-    overflow-x: hidden;
   }
-  a { color: var(--vibrant-scarlet); text-decoration: none; }
-  a:hover { color: var(--gilded-gold); }
-
-  /* Контейнер с двумя колонками */
+  a {
+    color: var(--vibrant-scarlet);
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--gilded-gold);
+  }
   .container {
     display: flex;
     max-width: 1200px;
     height: 100vh;
     margin: 0 auto;
+    width: 100%;
   }
-  /* Лента фоток слева - вертикальный скролл */
   .gallery-column {
     flex: 0 0 280px;
     background: var(--deep-navy);
@@ -39,6 +47,7 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
+    max-width: 100%;
   }
   .gallery-column img {
     width: 100%;
@@ -46,12 +55,12 @@
     cursor: pointer;
     transition: transform 0.27s ease;
     object-fit: cover;
+    max-width: 100%;
   }
   .gallery-column img:hover {
     transform: scale(1.05);
     z-index: 2;
   }
-  /* Текстовая колонка справа, с меньшим отступом слева */
   .text-column {
     flex: 1;
     background: transparent;
@@ -60,6 +69,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    max-width: 100%;
   }
   h1 {
     font-family: 'Playfair Display', serif;
@@ -121,7 +131,6 @@
     border-radius: 50%;
     object-fit: cover;
   }
-
   .schedule {
     display: grid;
     grid-template-columns: 3.5rem 1fr;
@@ -139,7 +148,6 @@
   .schedule-activity {
     color: var(--snow-white);
   }
-
   .calendar-widget {
     max-width: 400px;
     margin-top: 30px;
@@ -180,7 +188,7 @@
     color: #f0e4dd;
     border-radius: 0;
   }
-  .calendar .calendar {
+  .calendar {
     font-weight: 600;
     font-size: 1.05rem;
     color: var(--gilded-gold);
@@ -221,12 +229,12 @@
     color: #ddd;
   }
 
-  /* Мобильная адаптивность */
   @media (max-width: 960px) {
     .container {
       flex-direction: column;
       height: auto;
       margin: 0 1rem;
+      width: 100%;
     }
     .gallery-column {
       flex: none;
@@ -263,7 +271,7 @@
 <div class="container">
 
   <div class="gallery-column" aria-label="Галерея фотографий">
-
+   
     <img src="img/Photo4.jpg" alt="Фото 4" />
     <img src="img/Photo5.jpg" alt="Фото 5" />
     <img src="img/Photo6.jpg" alt="Фото 6" />
