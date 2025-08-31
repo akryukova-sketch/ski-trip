@@ -18,17 +18,19 @@
     background: var(--deep-navy);
     color: var(--snow-white);
     font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
   }
   a { color: var(--vibrant-scarlet); text-decoration: none; }
   a:hover { color: var(--gilded-gold); }
 
+  /* Контейнер с двумя колонками */
   .container {
     display: flex;
     max-width: 1200px;
     height: 100vh;
     margin: 0 auto;
   }
-  /* Левая колонка - вертикальная лента фото */
+  /* Лента фоток слева - вертикальный скролл */
   .gallery-column {
     flex: 0 0 280px;
     background: var(--deep-navy);
@@ -44,18 +46,16 @@
     cursor: pointer;
     transition: transform 0.27s ease;
     object-fit: cover;
-    /* no border or radius */
   }
   .gallery-column img:hover {
     transform: scale(1.05);
     z-index: 2;
   }
-
-  /* Правая колонка - текст и контент */
+  /* Текстовая колонка справа, с меньшим отступом слева */
   .text-column {
     flex: 1;
     background: transparent;
-    padding: 60px 40px 40px 30px;
+    padding: 60px 30px 40px 20px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -64,17 +64,20 @@
   h1 {
     font-family: 'Playfair Display', serif;
     font-weight: 900;
-    font-size: 2.8rem;
+    font-size: 2.5rem;
     color: var(--gilded-gold);
-    margin: 0 0 30px 0;
+    margin: 0 0 25px 0;
     letter-spacing: 0.1em;
+    line-height: 1.1;
   }
   h2 {
     font-family: 'Playfair Display', serif;
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     color: var(--snow-white);
-    margin: 50px 0 12px 0;
+    margin: 40px 0 12px 0;
+    text-align: center;
+    line-height: 1.2;
   }
   p, ul {
     font-size: 1.1rem;
@@ -87,9 +90,10 @@
   }
   .organizers, .partners {
     display: flex;
-    gap: 25px;
+    justify-content: center;
+    gap: 30px;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    margin-bottom: 35px;
   }
   .organizer-item, .partner-logo {
     flex: 0 0 auto;
@@ -123,7 +127,7 @@
     grid-template-columns: 3.5rem 1fr;
     gap: 6px 12px;
     max-width: 400px;
-    margin-top: 20px;
+    margin-top: 30px;
     color: var(--snow-white);
   }
   .schedule-time {
@@ -139,17 +143,22 @@
   .calendar-widget {
     max-width: 400px;
     margin-top: 30px;
-    background: var(--snow-white);
-    color: var(--deep-navy);
+    background: #e9edf5;
+    color: #4a5678;
     padding: 20px;
-    border-radius: 0;
+    border-radius: 8px;
     font-family: 'Montserrat', sans-serif;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.12);
   }
   .month-year {
-    font-weight: 700;
-    font-size: 1.3rem;
+    font-weight: 600;
+    font-size: 1.25rem;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
+    color: #384569;
+    background: #cad3eb;
+    border-radius: 6px;
+    padding: 6px 0;
   }
   .weekdays, .days {
     display: grid;
@@ -158,27 +167,28 @@
     font-weight: 600;
   }
   .weekdays div {
-    color: var(--deep-navy);
+    color: #38527c;
     margin-bottom: 8px;
   }
   .days div {
     padding: 10px 0;
     font-weight: 600;
+    font-size: 0.95rem;
   }
   .highlight {
-    background-color: var(--vibrant-scarlet);
-    color: var(--snow-white);
+    background-color: #9b3b3f;
+    color: #f0e4dd;
     border-radius: 0;
   }
-  .calendar {
-    font-weight: 700;
-    font-size: 1.1rem;
+  .calendar .calendar {
+    font-weight: 600;
+    font-size: 1.05rem;
     color: var(--gilded-gold);
     text-align: center;
-    margin-top: 12px;
+    margin-top: 14px;
   }
   form {
-    margin-top: 25px;
+    margin-top: 30px;
   }
   input[type="email"] {
     width: 100%;
@@ -210,7 +220,8 @@
     font-size: 0.9rem;
     color: #ddd;
   }
-  /* Адаптив */
+
+  /* Мобильная адаптивность */
   @media (max-width: 960px) {
     .container {
       flex-direction: column;
@@ -225,17 +236,24 @@
       flex-direction: row;
       display: flex;
       padding: 0 10px;
+      gap: 12px;
     }
     .gallery-column img {
       height: 160px;
       width: auto;
       flex-shrink: 0;
-      margin-right: 10px;
+      border-radius: 6px;
     }
     .text-column {
       flex: none;
       width: 100%;
       padding: 40px 20px 20px;
+    }
+    h1 {
+      font-size: 2rem;
+    }
+    h2 {
+      font-size: 1.2rem;
     }
   }
 </style>
@@ -343,7 +361,7 @@
       <div class="schedule-activity">Караоке</div>
     </div>
 
-    <h2>Календарь выездов — январь 2026</h2>
+    <h2>Календарь выездов — 2026</h2>
     <div class="calendar-widget">
       <div class="month-year">Январь 2026</div>
       <div class="weekdays">
@@ -377,4 +395,3 @@
 
 </body>
 </html>
-
