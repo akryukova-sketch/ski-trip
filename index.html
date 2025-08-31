@@ -12,22 +12,15 @@
     --gilded-gold: #FFD700;
     --vibrant-scarlet: #DC143C;
   }
-  * {
-    box-sizing: border-box;
-  }
+  * { box-sizing: border-box; }
   body, html {
     margin: 0; padding: 0; height: 100%;
     background: var(--deep-navy);
     color: var(--snow-white);
     font-family: 'Montserrat', sans-serif;
   }
-  a {
-    color: var(--vibrant-scarlet);
-    text-decoration: none;
-  }
-  a:hover {
-    color: var(--gilded-gold);
-  }
+  a { color: var(--vibrant-scarlet); text-decoration: none; }
+  a:hover { color: var(--gilded-gold); }
 
   .container {
     display: flex;
@@ -35,73 +28,38 @@
     height: 100vh;
     margin: 0 auto;
   }
+  /* Левая колонка - вертикальная лента фото */
   .gallery-column {
-    flex: 1.2;
+    flex: 0 0 280px;
     background: var(--deep-navy);
+    overflow-y: auto;
+    padding: 20px 12px;
     display: flex;
     flex-direction: column;
-    padding: 30px 20px;
+    gap: 14px;
   }
-  .photo-row-wrapper {
-    position: relative;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  .photo-row {
-    display: flex;
-    overflow-x: auto;
-    gap: 15px;
-    scrollbar-width: none;
-    flex: 1;
-  }
-  .photo-row::-webkit-scrollbar {
-    display: none;
-  }
-  .photo-row img {
-    height: 180px;
+  .gallery-column img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.27s ease;
     object-fit: cover;
-    cursor: pointer;
-    border-radius: 0;
-    border: none;
-    flex-shrink: 0;
-    transition: transform 0.3s ease;
+    /* no border or radius */
   }
-  .photo-row img:hover {
-    transform: scale(1.08);
-    z-index: 3;
-  }
-  .arrow-left, .arrow-right {
-    width: 30px;
-    height: 30px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    fill: var(--gilded-gold);
-    padding: 0;
-    user-select: none;
-  }
-  .arrow-left {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  .arrow-right {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+  .gallery-column img:hover {
+    transform: scale(1.05);
+    z-index: 2;
   }
 
+  /* Правая колонка - текст и контент */
   .text-column {
     flex: 1;
     background: transparent;
-    padding: 60px 40px 40px 40px;
+    padding: 60px 40px 40px 30px;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
   }
   h1 {
     font-family: 'Playfair Display', serif;
@@ -114,9 +72,9 @@
   h2 {
     font-family: 'Playfair Display', serif;
     font-weight: 700;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     color: var(--snow-white);
-    margin: 25px 0 15px 0;
+    margin: 50px 0 12px 0;
   }
   p, ul {
     font-size: 1.1rem;
@@ -166,6 +124,7 @@
     gap: 6px 12px;
     max-width: 400px;
     margin-top: 20px;
+    color: var(--snow-white);
   }
   .schedule-time {
     font-family: 'Playfair Display', serif;
@@ -246,26 +205,37 @@
     background-color: var(--gilded-gold);
     color: var(--deep-navy);
   }
-
   footer {
     margin-top: 40px;
     font-size: 0.9rem;
     color: #ddd;
   }
-
+  /* Адаптив */
   @media (max-width: 960px) {
     .container {
       flex-direction: column;
       height: auto;
       margin: 0 1rem;
     }
-    .gallery-column, .text-column {
+    .gallery-column {
       flex: none;
       width: 100%;
-      padding: 20px 10px;
+      height: 200px;
+      overflow-x: auto;
+      flex-direction: row;
+      display: flex;
+      padding: 0 10px;
     }
-    .photo-row img {
+    .gallery-column img {
       height: 160px;
+      width: auto;
+      flex-shrink: 0;
+      margin-right: 10px;
+    }
+    .text-column {
+      flex: none;
+      width: 100%;
+      padding: 40px 20px 20px;
     }
   }
 </style>
@@ -274,28 +244,18 @@
 
 <div class="container">
 
-  <div class="gallery-column">
-    <div class="photo-row-wrapper">
-      <button class="arrow-left" id="arrowLeft" aria-label="Назад">
-        <svg viewBox="0 0 24 24"><path d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
-      </button>
-      <div class="photo-row" id="photoRow" tabindex="0">
-       
-        <img src="img/Photo4.jpg" alt="Фото 4" />
-        <img src="img/Photo5.jpg" alt="Фото 5" />
-        <img src="img/Photo6.jpg" alt="Фото 6" />
-        <img src="img/Photo7.jpg" alt="Фото 7" />
-        <img src="img/Photo8.jpg" alt="Фото 8" />
-        <img src="img/Photo9.jpg" alt="Фото 9" />
-        <img src="img/Photo10.jpg" alt="Фото 10" />
-        <img src="img/Photo11.jpg" alt="Фото 11" />
-        <img src="img/Photo12.jpg" alt="Фото 12" />
-        <img src="img/Photo13.jpg" alt="Фото 13" />
-      </div>
-      <button class="arrow-right" id="arrowRight" aria-label="Вперед">
-        <svg viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-      </button>
-    </div>
+  <div class="gallery-column" aria-label="Галерея фотографий">
+
+    <img src="img/Photo4.jpg" alt="Фото 4" />
+    <img src="img/Photo5.jpg" alt="Фото 5" />
+    <img src="img/Photo6.jpg" alt="Фото 6" />
+    <img src="img/Photo7.jpg" alt="Фото 7" />
+    <img src="img/Photo8.jpg" alt="Фото 8" />
+    <img src="img/Photo9.jpg" alt="Фото 9" />
+    <img src="img/Photo10.jpg" alt="Фото 10" />
+    <img src="img/Photo11.jpg" alt="Фото 11" />
+    <img src="img/Photo12.jpg" alt="Фото 12" />
+    <img src="img/Photo13.jpg" alt="Фото 13" />
   </div>
 
   <div class="text-column" role="main">
@@ -311,7 +271,7 @@
           <div class="organizer-role">Инструктор НЛИ уровень Б (лыжи)</div>
         </div>
         <div class="organizer-item">
-          <img src="img/Photo14.jpg" alt="Елизавета Касьянова" class="circle-img-large" />
+          <img src="img/Photo4.jpg" alt="Елизавета Касьянова" class="circle-img-large" />
           <div class="organizer-name">Елизавета Касьянова</div>
           <div class="organizer-role">Инструктор НЛИ уровень Б (сноуборд)</div>
         </div>
@@ -414,27 +374,6 @@
   </div>
 
 </div>
-
-<script>
-  const photoRow = document.getElementById('photoRow');
-  const arrowLeft = document.getElementById('arrowLeft');
-  const arrowRight = document.getElementById('arrowRight');
-  const scrollAmount = 320;
-  arrowLeft.addEventListener('click', () => {
-    photoRow.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-  });
-  arrowRight.addEventListener('click', () => {
-    photoRow.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-  });
-  [arrowLeft, arrowRight].forEach(arrow => {
-    arrow.addEventListener('keydown', e => {
-      if(e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        arrow.click();
-      }
-    });
-  });
-</script>
 
 </body>
 </html>
