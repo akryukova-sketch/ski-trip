@@ -1,463 +1,225 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <title>Японский Экстрим: Культурный Фрирайд</title>
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --navy: #000080;
-            --white: #fff;
-            --gold: #FFD700;
-            --crimson: #DC143C;
-            --frost: rgba(255, 255, 255, 0.18);
-        }
-        html, body {
-            margin: 0; padding: 0; height: 100%;
-            font-family: 'Montserrat', Arial, sans-serif;
-            background: var(--navy) url('img/Photo1.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: var(--white);
-        }
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(120deg, var(--navy) 60%, #15184B 100%);
-            opacity: 0.88;
-            z-index: 0;
-        }
-        .content-wrapper {
-            position: relative;
-            z-index: 1;
-            max-width: 760px;
-            margin: 40px auto 60px auto;
-            padding: 32px 42px;
-            background: var(--frost);
-            border-radius: 18px;
-            box-shadow: 0 4px 32px rgba(0,0,0,0.55);
-            border: 2px solid var(--gold);
-        }
-        h1 {
-            color: var(--gold);
-            font-family: 'Playfair Display', serif;
-            font-size: 2.4em;
-            letter-spacing: 2px;
-            margin-top: 0;
-            margin-bottom: 28px;
-            font-weight: 900;
-            text-shadow: 0 3px 18px #000A2F44;
-        }
-        section h2, h2 {
-            color: var(--gold);
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            font-size: 1.35em;
-            letter-spacing: 1px;
-            margin-top: 2.5em;
-            margin-bottom: 14px;
-            text-align: center;
-            text-shadow: 0 2px 10px #000A2F22;
-        }
-        p, ul, .schedule-activity, .schedule-time {
-            font-family: 'Montserrat', Arial, sans-serif;
-            color: var(--white);
-            font-size: 1.08em;
-            line-height: 1.54;
-        }
-        ul {
-            padding-left: 24px;
-        }
-        .photo-row-wrapper {
-            margin-bottom: 38px;
-        }
-        .photo-row {
-            display: flex;
-            overflow-x: auto;
-            gap: 18px;
-            padding: 10px 54px;
-            scrollbar-width: none;
-        }
-        .photo-row::-webkit-scrollbar { display: none; }
-        .photo-row img {
-            height: 420px;
-            border-radius: 18px;
-            object-fit: cover;
-            flex-shrink: 0;
-            cursor: pointer;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.45), 0 0 0 3px var(--gold);
-            border: 0.5px solid var(--gold);
-            transition: transform 0.24s, box-shadow 0.24s;
-            background: var(--white);
-        }
-        .photo-row img:hover {
-            transform: scale(1.04);
-            z-index: 2;
-            box-shadow: 0 12px 36px 4px var(--gold), 0 8px 32px rgba(0,0,0,0.65);
-        }
-        .arrow-left, .arrow-right {
-            position: absolute; top: 50%;
-            transform: translateY(-50%);
-            width: 42px;
-            height: 74px;
-            background: var(--navy);
-            border-radius: 25px;
-            border: 2px solid var(--gold);
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 10;
-            opacity: 0.74;
-            transition: background 0.32s, opacity 0.32s;
-        }
-        .arrow-left:hover, .arrow-right:hover {
-            background: var(--gold);
-            opacity: 0.98;
-        }
-        .arrow-left { left: 6px; }
-        .arrow-right { right: 6px; }
-        .arrow-left svg, .arrow-right svg {
-            fill: var(--white);
-            width: 26px; height: 26px;
-        }
-        .arrow-left:hover svg, .arrow-right:hover svg { fill: var(--navy);}
-        .organizers {
-            display: flex; gap: 50px; justify-content: center;
-            margin-bottom: 40px; flex-wrap: wrap;
-        }
-        .organizer-item { text-align: center; max-width: 160px; }
-        .circle-img-large {
-            width: 140px; height: 140px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--gold);
-            box-shadow: 0 4px 18px #0008;
-            margin: 0 auto 12px auto;
-            transition: transform 0.3s, box-shadow 0.3s;
-            background: var(--white);
-        }
-        .circle-img-large:hover {
-            transform: scale(1.06);
-            box-shadow: 0 8px 32px var(--gold), 0 8px 24px #000B;
-        }
-        .organizer-name { font-weight: bold; font-size: 1.15em; color: var(--gold);}
-        .organizer-role { font-size: 1.02em; color: #E6E6E6;}
-        .partners {
-            display: flex; gap: 22px; justify-content: center;
-            margin-bottom: 40px; flex-wrap: wrap;
-        }
-        .partner-logo {
-            width: 66px; height: 66px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--gold);
-            box-shadow: 0 2px 12px #0007;
-            background: var(--white);
-            transition: transform 0.2s;
-        }
-        .partner-logo:hover {
-            transform: scale(1.14) rotate(-4deg);
-            box-shadow: 0 6px 16px var(--gold);
-        }
-        /* SCHEDULE TABLE STYLES */
-        .schedule-table {
-            display: table; width: 100%;
-            background: rgba(255,255,255,0.09);
-            border-radius: 10px;
-            margin-bottom: 18px;
-            margin-top: 22px;
-            padding: 16px 8px 15px 8px;
-            border: 1.5px solid var(--gold);
-            box-shadow: 0 0px 8px #0003;
-        }
-        .schedule-row { display: table-row; }
-        .schedule-time, .schedule-activity {
-            display: table-cell;
-            padding: 7px 12px 7px 0;
-            vertical-align: middle;
-            font-size: 1.09em;
-        }
-        .schedule-time {
-            min-width: 80px; width: 96px;
-            font-weight: bold;
-            color: var(--navy);
-            text-align: right; white-space: nowrap;
-            padding-right: 18px;
-            background: var(--gold);
-            border-radius: 7px;
-        }
-        .schedule-activity { text-align: left; color: var(--white);}
-        /* CALENDAR & OTHER BLOCK STYLES */
-        .calendar-widget {
-            max-width: 390px;
-            margin: 24px auto 38px auto;
-            background: var(--white);
-            border: 2.5px solid var(--gold);
-            border-radius: 13px;
-            padding: 20px;
-            box-shadow: 0 4px 20px #0007;
-            color: var(--navy);
-            font-family: 'Montserrat', sans-serif;
-        }
-        .calendar-widget .month-year {
-            text-align: center;
-            font-weight: 700;
-            font-size: 1.2em;
-            letter-spacing: 1.5px;
-            color: var(--navy);
-            background: linear-gradient(90deg, var(--gold) 25%, #fff 80%);
-            border-radius: 6px;
-            margin-bottom: 8px;
-            padding: 2.5px 0 2px 0;
-            box-shadow: 0 1px 5px #FFD70044 inset;
-        }
-        .calendar-widget .weekdays, .calendar-widget .days {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            text-align: center;
-            font-weight: 600;
-        }
-        .calendar-widget .weekdays div {
-            font-weight: 800;
-            color: var(--navy);
-            background: var(--gold);
-            border-radius: 3px;
-            margin-bottom: 6px;
-            letter-spacing: 1px;
-            font-size: 0.97em;
-        }
-        .calendar-widget .days div {
-            padding: 10px 0;
-            margin: 2px 1px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 1em;
-            transition: background 0.15s;
-        }
-        .calendar-widget .days div.highlight {
-            background: var(--crimson);
-            color: var(--white);
-            font-weight: bold;
-            box-shadow: 0 0 12px var(--crimson);
-            border: 1.5px solid var(--gold);
-        }
-        .calendar-widget .days div.empty { background: transparent; pointer-events: none; }
-        .calendar {
-            margin: 16px 0 24px 0;
-            font-weight: bold;
-            text-align: center;
-            font-size: 1.13em;
-            letter-spacing: 1px;
-            color: var(--gold);
-            text-shadow: 0 2px 6px #0003;
-        }
-        form {
-            margin-top: 30px;
-            text-align: center;
-        }
-        input[type="email"] {
-            width: 80%; max-width: 350px;
-            padding: 8px; border-radius: 4px;
-            border: none; font-size: 1.05em;
-        }
-        input[type="submit"] {
-            padding: 9px 24px;
-            background: var(--crimson);
-            color: white;
-            border: 1.5px solid var(--gold);
-            font-family: 'Montserrat', Arial, sans-serif;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-left: 10px;
-            font-size: 1.08em;
-            transition: background 0.2s, color 0.2s;
-        }
-        input[type="submit"]:hover {
-            background: var(--gold);
-            color: var(--navy);
-        }
-        footer {
-            margin-top: 40px;
-            font-size: 0.97em;
-            color: #ddd;
-            text-align: center;
-            font-family: 'Montserrat', Arial, sans-serif;
-        }
-        @media (max-width: 768px) {
-            .content-wrapper { margin: 20px 10px; padding: 18px 5vw; }
-            .photo-row img { height: 252px; }
-            h1 { font-size: 1.35em; }
-            .circle-img-large { width: 86px; height: 86px; }
-            .partner-logo { width: 46px; height: 46px;}
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Японский Экстрим: Культурный Фрирайд</title>
+
+<!-- Google Fonts: Playfair Display for headings, Montserrat for body -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
+
+<style>
+  /* Color palette */
+  :root {
+    --deep-navy: #000080;
+    --snow-white: #FFFFFF;
+    --gilded-gold: #FFD700;
+    --vibrant-scarlet: #DC143C;
+  }
+
+  /* Reset & base */
+  * {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    background: var(--deep-navy);
+    color: var(--snow-white);
+    font-family: 'Montserrat', sans-serif;
+  }
+  a {
+    color: var(--vibrant-scarlet);
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--gilded-gold);
+  }
+
+  /* Container splits page 50/50 horizontally */
+  .container {
+    display: flex;
+    height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  /* Content column */
+  .content-column {
+    flex: 1;
+    padding: 6rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--deep-navy);
+  }
+  /* Image column */
+  .image-column {
+    flex: 1;
+    overflow: hidden;
+  }
+  .image-column img {
+    height: 100vh;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+    /* no borders or radius */
+  }
+
+  /* Headings */
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 3rem;
+    color: var(--gilded-gold);
+    letter-spacing: 0.15em;
+    margin: 0 0 1.2rem 0;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--snow-white);
+    margin: 1.6rem 0 1rem 0;
+  }
+
+  /* Paragraph and text */
+  p, ul {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    max-width: 460px;
+    margin-bottom: 1.4rem;
+  }
+  ul {
+    padding-left: 24px;
+  }
+
+  /* Schedule: simple grid for neat times and activities */
+  .schedule {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    row-gap: 0.9rem;
+    column-gap: 1rem;
+    max-width: 460px;
+    margin-bottom: 2rem;
+  }
+  .schedule-time {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--gilded-gold);
+    text-align: right;
+  }
+  .schedule-activity {
+    color: var(--snow-white);
+  }
+
+  /* Form styles */
+  form {
+    margin-top: 1.8rem;
+    max-width: 460px;
+    display: flex;
+    gap: 0.8rem;
+  }
+  input[type="email"] {
+    flex: 1;
+    padding: 0.88rem 1rem;
+    font-size: 1rem;
+    border: 2px solid var(--gilded-gold);
+    background: transparent;
+    color: var(--snow-white);
+    font-family: 'Montserrat', sans-serif;
+  }
+  input[type="email"]::placeholder {
+    color: #dcdcdc99;
+  }
+  input[type="submit"] {
+    padding: 0.88rem 2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    background: var(--vibrant-scarlet);
+    border: none;
+    color: var(--snow-white);
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  input[type="submit"]:hover {
+    background: var(--gilded-gold);
+    color: var(--deep-navy);
+  }
+
+  /* Footer */
+  footer {
+    margin-top: auto;
+    font-size: 0.9rem;
+    color: #ddd;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 960px) {
+    .container {
+      flex-direction: column;
+      height: auto;
+      margin: 0 1rem;
+    }
+    .image-column {
+      height: 320px;
+    }
+  }
+</style>
 </head>
 <body>
-    <div class="content-wrapper">
-        <h1>Японский Экстрим: Культурный Фрирайд</h1>
-        <!-- PHOTO GALLERY SECTION -->
-        <div class="photo-row-wrapper">
-            <div class="arrow-left" id="arrowLeft" aria-label="Смотреть фотографии назад" tabindex="0">
-                <svg viewBox="0 0 24 24"><path d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
-            </div>
-            <div class="photo-row" id="photoRow">
-                <img src="img/Photo4.jpg" alt="Фото 4" />
-                <img src="img/Photo5.jpg" alt="Фото 5" />
-                <img src="img/Photo6.jpg" alt="Фото 6" />
-                <img src="img/Photo7.jpg" alt="Фото 7" />
-                <img src="img/Photo8.jpg" alt="Фото 8" />
-                <img src="img/Photo9.jpg" alt="Фото 9" />
-                <img src="img/Photo10.jpg" alt="Фото 10" />
-                <img src="img/Photo11.jpg" alt="Фото 11" />
-                <img src="img/Photo12.jpg" alt="Фото 12" />
-                <img src="img/Photo13.jpg" alt="Фото 13" />
-            </div>
-            <div class="arrow-right" id="arrowRight" aria-label="Смотреть фотографии вперед" tabindex="0">
-                <svg viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-            </div>
-        </div>
-        <section>
-            <h2>Организаторы</h2>
-            <div class="organizers">
-                <div class="organizer-item">
-                    <img src="img/Photo2.jpg" alt="Анна Крюкова" class="circle-img-large" />
-                    <div class="organizer-name">Анна Крюкова</div>
-                    <div class="organizer-role">Инструктор НЛИ уровень Б (лыжи)</div>
-                </div>
-                <div class="organizer-item">
-                    <img src="img/Photo14.jpg" alt="Елизавета Касьянова" class="circle-img-large" />
-                    <div class="organizer-name">Елизавета Касьянова</div>
-                    <div class="organizer-role">Инструктор НЛИ уровень Б (сноуборд)</div>
-                </div>
-            </div>
-        </section>
-        <section>
-            <h2>Партнёры</h2>
-            <div class="partners">
-                <img src="img/partner1logo.png" alt="Партнер 1" class="partner-logo" />
-                <img src="img/partner2logo.png" alt="Партнер 2" class="partner-logo" />
-            </div>
-        </section>
-        <h2>О регионе катания — остров Хоккайдо</h2>
-        <p>
-            Средняя толщина снежного покрова: около 10 метров за зимний сезон.<br />
-            Количество курортов: более 20, включая Нисеко, Кироро, Рисуцу.<br />
-            Средний перепад высот: 300-1200 метров.<br />
-            Хоккайдо — северный остров Японии с богатой природой и гостеприимными жителями.
-        </p>
-        <h2>Ключевые пункты программы</h2>
-        <ul>
-            <li>Количество человек в группе: от 5</li>
-            <li>Количество гидов: 2</li>
-            <li>Проживание: Большой уютный дом в Нисеко</li>
-            <li>Места катания: Нисеко Виладж, Хирафу, Аннупури, Ханазоно, Кироро, Рисуцу</li>
-            <li>Стоимость: 6000 USD</li>
-        </ul>
-        <h2>Запланированные активности (входят в стоимость)</h2>
-        <ul>
-            <li>Лучшие рестораны азиатской кухни</li>
-            <li>Мастер-классы японской кухни</li>
-            <li>Поездка в Саппоро</li>
-            <li>Купание в горячих источниках онсен</li>
-        </ul>
-        <h2>Дополнительные активности (не входят в стоимость)</h2>
-        <ul>
-            <li>Фрирайд на ратраке</li>
-            <li>Молочная ферма Кобо</li>
-            <li>Лучшая итальянская выпечка</li>
-            <li>Дегустация виски</li>
-        </ul>
-        <h2>Примерный распорядок дня</h2>
-        <div class="schedule-table">
-            <div class="schedule-row"><div class="schedule-time">7:30</div><div class="schedule-activity">Подъем</div></div>
-            <div class="schedule-row"><div class="schedule-time">7:45–8:00</div><div class="schedule-activity">Завтрак</div></div>
-            <div class="schedule-row"><div class="schedule-time">8:30</div><div class="schedule-activity">Зарядка</div></div>
-            <div class="schedule-row"><div class="schedule-time">9:00</div><div class="schedule-activity">Выход на курорт</div></div>
-            <div class="schedule-row"><div class="schedule-time">10:00–16:00</div><div class="schedule-activity">Катание</div></div>
-            <div class="schedule-row"><div class="schedule-time">13:00</div><div class="schedule-activity">Обед на склоне</div></div>
-            <div class="schedule-row"><div class="schedule-time">16:30</div><div class="schedule-activity">Возвращение домой</div></div>
-            <div class="schedule-row"><div class="schedule-time">17:00–18:00</div><div class="schedule-activity">Онсен</div></div>
-            <div class="schedule-row"><div class="schedule-time">19:00</div><div class="schedule-activity">Ужин</div></div>
-            <div class="schedule-row"><div class="schedule-time">21:00</div><div class="schedule-activity">Караоке</div></div>
-        </div>
-        <h2>Календарь выездов — январь 2026</h2>
-        <div class="calendar-widget">
-            <div class="month-year">Январь 2026</div>
-            <div class="weekdays">
-                <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
-            </div>
-            <div class="days">
-                <div class="empty"></div>
-                <div class="empty"></div>
-                <div class="empty"></div>
-                <div class="empty"></div>
-                <div>1</div>
-                <div>2</div>
-                <div>3</div>
-                <div>4</div>
-                <div>5</div>
-                <div>6</div>
-                <div>7</div>
-                <div>8</div>
-                <div>9</div>
-                <div>10</div>
-                <div>11</div>
-                <div>12</div>
-                <div>13</div>
-                <div>14</div>
-                <div class="highlight">15</div>
-                <div class="highlight">16</div>
-                <div class="highlight">17</div>
-                <div class="highlight">18</div>
-                <div class="highlight">19</div>
-                <div class="highlight">20</div>
-                <div class="highlight">21</div>
-                <div class="highlight">22</div>
-                <div>23</div>
-                <div>24</div>
-                <div>25</div>
-                <div>26</div>
-                <div>27</div>
-                <div>28</div>
-                <div>29</div>
-                <div>30</div>
-                <div>31</div>
-            </div>
-        </div>
-        <div class="calendar">Даты выезда: 15–22 января 2026</div>
-        <h2>Заявка на участие</h2>
-        <form>
-            <label for="email">Введите ваш email:</label><br />
-            <input type="email" id="email" name="email" placeholder="example@mail.com" required />
-            <input type="submit" value="Отправить" />
-        </form>
-        <footer>
-            <p>
-                Контакты:<br />
-                Телефон: +7 926 616 79 15<br />
-                Адрес: г. Москва, Карамышевская наб. 48-3-78
-            </p>
-        </footer>
+  <div class="container">
+    <div class="content-column" role="main">
+      <h1>Японский Экстрим:<br />Культурный Фрирайд</h1>
+      <h2>Эксклюзивный тур на остров Хоккайдо</h2>
+      <p>Погрузитесь в уникальный опыт фрирайда на лыжах и сноуборде в Японии, открывая лучшие места катания, аутентичную кухню и горячие источники.</p>
+
+      <h2>Примерный распорядок дня</h2>
+      <div class="schedule" role="list">
+        <div class="schedule-time" role="listitem">7:30</div>
+        <div class="schedule-activity" role="listitem">Подъем</div>
+
+        <div class="schedule-time" role="listitem">7:45–8:00</div>
+        <div class="schedule-activity" role="listitem">Завтрак</div>
+
+        <div class="schedule-time" role="listitem">8:30</div>
+        <div class="schedule-activity" role="listitem">Зарядка</div>
+
+        <div class="schedule-time" role="listitem">9:00</div>
+        <div class="schedule-activity" role="listitem">Выход на курорт</div>
+
+        <div class="schedule-time" role="listitem">10:00–16:00</div>
+        <div class="schedule-activity" role="listitem">Катание</div>
+
+        <div class="schedule-time" role="listitem">13:00</div>
+        <div class="schedule-activity" role="listitem">Обед на склоне</div>
+
+        <div class="schedule-time" role="listitem">16:30</div>
+        <div class="schedule-activity" role="listitem">Возвращение домой</div>
+
+        <div class="schedule-time" role="listitem">17:00–18:00</div>
+        <div class="schedule-activity" role="listitem">Онсен</div>
+
+        <div class="schedule-time" role="listitem">19:00</div>
+        <div class="schedule-activity" role="listitem">Ужин</div>
+
+        <div class="schedule-time" role="listitem">21:00</div>
+        <div class="schedule-activity" role="listitem">Караоке</div>
+      </div>
+
+      <form>
+        <input type="email" placeholder="Введите ваш email" aria-label="Введите ваш email" required />
+        <input type="submit" value="Забронировать участие" />
+      </form>
+
+      <footer>
+        <p>Контакты:<br />Телефон: +7 926 616 79 15<br />Адрес: г. Москва, Карамышевская наб. 48-3-78</p>
+      </footer>
     </div>
-    <script>
-        const photoRow = document.getElementById('photoRow');
-        const arrowLeft = document.getElementById('arrowLeft');
-        const arrowRight = document.getElementById('arrowRight');
-        const scrollAmount = 320;
-        arrowLeft.addEventListener('click', () => {
-            photoRow.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-        });
-        arrowRight.addEventListener('click', () => {
-            photoRow.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        });
-        [arrowLeft, arrowRight].forEach(arrow => {
-            arrow.addEventListener('keydown', e => {
-                if(e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    arrow.click();
-                }
-            });
-        });
-    </script>
+
+    <div class="image-column" aria-hidden="true">
+      <img src="img/Photo1.jpg" alt="Японский Экстрим фрирайд Хоккайдо" />
+    </div>
+  </div>
 </body>
 </html>
