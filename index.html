@@ -33,8 +33,6 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.6);
             overflow: auto;
         }
-
-        /* Фотоколлекция в стиле Instagram Stories */
         .photo-row-wrapper {
             position: relative;
             max-width: 100%;
@@ -66,8 +64,6 @@
             z-index: 2;
             box-shadow: 0 8px 20px rgba(0,0,0,0.7);
         }
-
-        /* Стрелки по бокам */
         .arrow-left, .arrow-right {
             position: absolute;
             top: 50%;
@@ -87,19 +83,13 @@
         .arrow-left:hover, .arrow-right:hover {
             background: rgba(0,0,0,0.6);
         }
-        .arrow-left {
-            left: 5px;
-        }
-        .arrow-right {
-            right: 5px;
-        }
+        .arrow-left { left: 5px; }
+        .arrow-right { right: 5px; }
         .arrow-left svg, .arrow-right svg {
             fill: white;
             width: 24px;
             height: 24px;
         }
-
-        /* Заголовки и текст */
         h1 {
             font-size: 2em;
             margin-top: 0;
@@ -120,11 +110,34 @@
         ul {
             padding-left: 20px;
         }
-        .schedule {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 15px;
+        /* Schedule block - invisible two-column table layout */
+        .schedule-table {
+            display: table;
+            width: 100%;
+            background: rgba(255,255,255,0.15);
             border-radius: 8px;
             margin-bottom: 20px;
+            padding: 15px;
+        }
+        .schedule-row {
+            display: table-row;
+        }
+        .schedule-time, .schedule-activity {
+            display: table-cell;
+            padding: 6px 12px 6px 0;
+            vertical-align: middle;
+        }
+        .schedule-time {
+            width: 90px;
+            font-weight: bold;
+            color: #aec6cf;
+            text-align: right;
+            white-space: nowrap;
+            padding-right: 16px;
+        }
+        .schedule-activity {
+            text-align: left;
+            color: #fff;
         }
         .calendar {
             margin: 10px 0 20px 0;
@@ -160,13 +173,12 @@
             color: #ddd;
             text-align: center;
         }
-
-        /* Организаторы */
         .organizers {
             display: flex;
             gap: 50px;
             justify-content: center;
             margin-bottom: 40px;
+            flex-wrap: wrap;
         }
         .organizer-item {
             text-align: center;
@@ -182,6 +194,7 @@
             margin: 0 auto 12px auto;
             transition: transform 0.3s ease;
             cursor: pointer;
+            display: block;
         }
         .circle-img-large:hover {
             transform: scale(1.05);
@@ -197,8 +210,6 @@
             color: #c0c8d7;
             line-height: 1.3;
         }
-
-        /* Партнёры */
         .partners {
             display: flex;
             gap: 25px;
@@ -220,8 +231,6 @@
             transform: scale(1.1);
             box-shadow: 0 4px 16px rgba(0,0,0,0.7);
         }
-
-        /* Календарь */
         .calendar-widget {
             max-width: 380px;
             margin: 20px auto 40px auto;
@@ -296,17 +305,12 @@
 </head>
 <body>
     <div class="content-wrapper">
-
-        <!-- Название программы над фотогалереей -->
         <h1>Японский Экстрим: Культурный Фрирайд</h1>
-
-        <!-- Фотоколлекция в стиле Instagram Stories с навигационными стрелками -->
         <div class="photo-row-wrapper">
             <div class="arrow-left" id="arrowLeft" aria-label="Смотреть фотографии назад" tabindex="0">
                 <svg viewBox="0 0 24 24"><path d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
             </div>
             <div class="photo-row" id="photoRow">
-                <img src="img/Photo1.jpg" alt="Фото 1" />
                 <img src="img/Photo4.jpg" alt="Фото 4" />
                 <img src="img/Photo5.jpg" alt="Фото 5" />
                 <img src="img/Photo6.jpg" alt="Фото 6" />
@@ -322,7 +326,6 @@
                 <svg viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
             </div>
         </div>
-
         <section>
             <h2>Организаторы</h2>
             <div class="organizers">
@@ -338,7 +341,6 @@
                 </div>
             </div>
         </section>
-
         <section>
             <h2>Партнёры</h2>
             <div class="partners">
@@ -346,7 +348,6 @@
                 <img src="img/partner2logo.png" alt="Партнер 2" class="partner-logo" />
             </div>
         </section>
-
         <h2>О регионе катания — остров Хоккайдо</h2>
         <p>
             Средняя толщина снежного покрова: около 10 метров за зимний сезон.<br />
@@ -354,7 +355,6 @@
             Средний перепад высот: 300-1200 метров.<br />
             Хоккайдо — северный остров Японии с богатой природой и гостеприимными жителями.
         </p>
-
         <h2>Ключевые пункты программы</h2>
         <ul>
             <li>Количество человек в группе: от 5</li>
@@ -363,7 +363,6 @@
             <li>Места катания: Нисеко Виладж, Хирафу, Аннупури, Ханазоно, Кироро, Рисуцу</li>
             <li>Стоимость: 6000 USD</li>
         </ul>
-
         <h2>Запланированные активности (входят в стоимость)</h2>
         <ul>
             <li>Лучшие рестораны азиатской кухни</li>
@@ -371,7 +370,6 @@
             <li>Поездка в Саппоро</li>
             <li>Купание в горячих источниках онсен</li>
         </ul>
-
         <h2>Дополнительные активности (не входят в стоимость)</h2>
         <ul>
             <li>Фрирайд на ратраке</li>
@@ -379,30 +377,58 @@
             <li>Лучшая итальянская выпечка</li>
             <li>Дегустация виски</li>
         </ul>
-
         <h2>Примерный распорядок дня</h2>
-        <div class="schedule">
-            <p>
-                Подъем — 7:30<br />
-                Завтрак — 7:45-8:00<br />
-                Зарядка — 8:30<br />
-                Выход на курорт — 9:00<br />
-                Катание — 10:00-16:00<br />
-                Обед — 13:00<br />
-                Возвращение домой — 16:30<br />
-                Онсен — 17:00-18:00<br />
-                Ужин суши — 19:00<br />
-                Караоке — 21:00
-            </p>
+        <div class="schedule-table">
+            <div class="schedule-row">
+                <div class="schedule-time">7:30</div>
+                <div class="schedule-activity">Подъем</div>
+            </div>
+            <div class="schedule-row">
+                <div class="schedule-time">7:45–8:00</div>
+                <div class="schedule-activity">Завтрак</div>
+            </div>
+            <div class="schedule-row">
+                <div class="schedule-time">8:30</div>
+                <div class="schedule-activity">Зарядка</div>
+            </div>
+            <div class="schedule-row">
+                <div class="schedule-time">9:00</div>
+                <div class="schedule-activity">Выход на курорт</div>
+            </div>
+            <div class="schedule-row">
+                <div class="schedule-time">10:00–16:00</div>
+                <div class="schedule-activity">Катание</div>
+            </div>
+            <div class="schedule-row">
+                <div class="schedule-time">13:00</div>
+                <div class="schedule-activity">Обед на склоне</div>
+            </div>
+            <div class="schedule-row">
+                <div class="schedule-time">16:30</div>
+                <div class="schedule-activity">Возвращение домой</div>
+            </div>
+            <div class="schedule-row">
+                <div class="schedule-time">17:00–18:00</div>
+                <div class="schedule-activity">Онсен</div>
+            </div>
+            <div class="schedule-row">
+                <div class="schedule-time">19:00</div>
+                <div class="schedule-activity">Ужин</div>
+            </div>
+            <div class="schedule-row">
+                <div class="schedule-time">21:00</div>
+                <div class="schedule-activity">Караоке</div>
+            </div>
         </div>
-
-        <h2>Календарь выездов — Январь 2025</h2>
+        <h2>Календарь выездов — январь 2026</h2>
         <div class="calendar-widget">
-            <div class="month-year">Январь 2025</div>
+            <div class="month-year">Январь 2026</div>
             <div class="weekdays">
                 <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
             </div>
             <div class="days">
+                <div class="empty"></div>
+                <div class="empty"></div>
                 <div class="empty"></div>
                 <div class="empty"></div>
                 <div>1</div>
@@ -410,50 +436,41 @@
                 <div>3</div>
                 <div>4</div>
                 <div>5</div>
-
                 <div>6</div>
                 <div>7</div>
-                <div class="highlight">8</div>
-                <div class="highlight">9</div>
-                <div class="highlight">10</div>
-                <div class="highlight">11</div>
-                <div class="highlight">12</div>
-
-                <div class="highlight">13</div>
-                <div class="highlight">14</div>
+                <div>8</div>
+                <div>9</div>
+                <div>10</div>
+                <div>11</div>
+                <div>12</div>
+                <div>13</div>
+                <div>14</div>
                 <div class="highlight">15</div>
                 <div class="highlight">16</div>
                 <div class="highlight">17</div>
-                <div>18</div>
-                <div>19</div>
-
-                <div>20</div>
-                <div>21</div>
-                <div>22</div>
+                <div class="highlight">18</div>
+                <div class="highlight">19</div>
+                <div class="highlight">20</div>
+                <div class="highlight">21</div>
+                <div class="highlight">22</div>
                 <div>23</div>
                 <div>24</div>
                 <div>25</div>
                 <div>26</div>
-
                 <div>27</div>
                 <div>28</div>
                 <div>29</div>
                 <div>30</div>
                 <div>31</div>
-                <div class="empty"></div>
-                <div class="empty"></div>
             </div>
         </div>
-
-        <div class="calendar">Даты выезда: 9-16 января, 16-23 января</div>
-
+        <div class="calendar">Даты выезда: 15–22 января 2026</div>
         <h2>Заявка на участие</h2>
         <form>
             <label for="email">Введите ваш email:</label><br />
             <input type="email" id="email" name="email" placeholder="example@mail.com" required />
             <input type="submit" value="Отправить" />
         </form>
-
         <footer>
             <p>
                 Контакты:<br />
@@ -462,21 +479,17 @@
             </p>
         </footer>
     </div>
-
     <script>
         const photoRow = document.getElementById('photoRow');
         const arrowLeft = document.getElementById('arrowLeft');
         const arrowRight = document.getElementById('arrowRight');
-
         const scrollAmount = 320;
-
         arrowLeft.addEventListener('click', () => {
             photoRow.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
         });
         arrowRight.addEventListener('click', () => {
             photoRow.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         });
-
         [arrowLeft, arrowRight].forEach(arrow => {
             arrow.addEventListener('keydown', e => {
                 if(e.key === 'Enter' || e.key === ' ') {
@@ -488,4 +501,3 @@
     </script>
 </body>
 </html>
-
