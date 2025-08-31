@@ -11,19 +11,20 @@
     --snow-white: #FFFFFF;
     --gilded-gold: #FFD700;
     --vibrant-scarlet: #DC143C;
+    --calendar-bg: #eef3fa;
+    --calendar-text: #36508a;
+    --calendar-highlight-bg: #D8434D;
+    --calendar-highlight-text: #fff5f7;
   }
   *, *::before, *::after {
     box-sizing: border-box;
   }
   html, body {
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    overflow-x: hidden;
-    height: 100%;
+    margin: 0; padding: 0; height: 100%;
     background: var(--deep-navy);
     color: var(--snow-white);
     font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
   }
   a {
     color: var(--vibrant-scarlet);
@@ -37,25 +38,28 @@
     max-width: 1200px;
     height: 100vh;
     margin: 0 auto;
-    width: 100%;
   }
   .gallery-column {
-    flex: 0 0 280px;
+    flex: 0 0 320px;
     background: var(--deep-navy);
     overflow-y: auto;
-    padding: 20px 12px;
+    padding: 12px 0;
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    max-width: 100%;
+  }
+  .gallery-column a {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: none;
   }
   .gallery-column img {
+    display: block;
     width: 100%;
-    height: auto;
     cursor: pointer;
-    transition: transform 0.27s ease;
     object-fit: cover;
-    max-width: 100%;
+    margin-bottom: 0; /* убрать отступы */
+    transition: transform 0.3s ease;
   }
   .gallery-column img:hover {
     transform: scale(1.05);
@@ -64,12 +68,11 @@
   .text-column {
     flex: 1;
     background: transparent;
-    padding: 60px 30px 40px 20px;
+    padding: 40px 30px 40px 20px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    max-width: 100%;
   }
   h1 {
     font-family: 'Playfair Display', serif;
@@ -151,8 +154,8 @@
   .calendar-widget {
     max-width: 400px;
     margin-top: 30px;
-    background: #e9edf5;
-    color: #4a5678;
+    background: var(--calendar-bg);
+    color: var(--calendar-text);
     padding: 20px;
     border-radius: 8px;
     font-family: 'Montserrat', sans-serif;
@@ -163,8 +166,8 @@
     font-size: 1.25rem;
     text-align: center;
     margin-bottom: 14px;
-    color: #384569;
-    background: #cad3eb;
+    color: var(--calendar-text);
+    background: #d2dbf1;
     border-radius: 6px;
     padding: 6px 0;
   }
@@ -175,7 +178,7 @@
     font-weight: 600;
   }
   .weekdays div {
-    color: #38527c;
+    color: #405a9a;
     margin-bottom: 8px;
   }
   .days div {
@@ -184,8 +187,8 @@
     font-size: 0.95rem;
   }
   .highlight {
-    background-color: #9b3b3f;
-    color: #f0e4dd;
+    background-color: var(--calendar-highlight-bg);
+    color: var(--calendar-highlight-text);
     border-radius: 0;
   }
   .calendar {
@@ -228,13 +231,12 @@
     font-size: 0.9rem;
     color: #ddd;
   }
-
+  /* Мобильная адаптивность */
   @media (max-width: 960px) {
     .container {
       flex-direction: column;
       height: auto;
       margin: 0 1rem;
-      width: 100%;
     }
     .gallery-column {
       flex: none;
@@ -264,6 +266,36 @@
       font-size: 1.2rem;
     }
   }
+  /* Lightbox Overlay */
+  #lightbox-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(6px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  #lightbox-overlay img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 8px;
+    box-shadow: 0 0 30px #000;
+  }
+  #lightbox-overlay:target {
+    display: flex;
+  }
+  #lightbox-close {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: var(--snow-white);
+    font-size: 2.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    user-select: none;
+  }
 </style>
 </head>
 <body>
@@ -271,17 +303,18 @@
 <div class="container">
 
   <div class="gallery-column" aria-label="Галерея фотографий">
-   
-    <img src="img/Photo4.jpg" alt="Фото 4" />
-    <img src="img/Photo5.jpg" alt="Фото 5" />
-    <img src="img/Photo6.jpg" alt="Фото 6" />
-    <img src="img/Photo7.jpg" alt="Фото 7" />
-    <img src="img/Photo8.jpg" alt="Фото 8" />
-    <img src="img/Photo9.jpg" alt="Фото 9" />
-    <img src="img/Photo10.jpg" alt="Фото 10" />
-    <img src="img/Photo11.jpg" alt="Фото 11" />
-    <img src="img/Photo12.jpg" alt="Фото 12" />
-    <img src="img/Photo13.jpg" alt="Фото 13" />
+    <!-- Галерея: фото обернуты в якоря с ссылками на увеличенную версию -->
+    
+    <a href="#img2"><img src="img/Photo4.jpg" alt="Фото 4" /></a>
+    <a href="#img3"><img src="img/Photo5.jpg" alt="Фото 5" /></a>
+    <a href="#img4"><img src="img/Photo6.jpg" alt="Фото 6" /></a>
+    <a href="#img5"><img src="img/Photo7.jpg" alt="Фото 7" /></a>
+    <a href="#img6"><img src="img/Photo8.jpg" alt="Фото 8" /></a>
+    <a href="#img7"><img src="img/Photo9.jpg" alt="Фото 9" /></a>
+    <a href="#img8"><img src="img/Photo10.jpg" alt="Фото 10" /></a>
+    <a href="#img9"><img src="img/Photo11.jpg" alt="Фото 11" /></a>
+    <a href="#img10"><img src="img/Photo12.jpg" alt="Фото 12" /></a>
+    <a href="#img11"><img src="img/Photo13.jpg" alt="Фото 13" /></a>
   </div>
 
   <div class="text-column" role="main">
@@ -400,6 +433,41 @@
   </div>
 
 </div>
+
+<!-- Lightbox Overlay для увеличения фото -->
+<div id="lightbox-overlay" onclick="location.hash='';">
+  <span id="lightbox-close" title="Закрыть">&times;</span>
+  <img id="lightbox-img" src="" alt="Просмотр фотографии" />
+</div>
+
+<script>
+  const galleryLinks = document.querySelectorAll('.gallery-column a');
+  const lightbox = document.getElementById('lightbox-overlay');
+  const lightboxImg = document.getElementById('lightbox-img');
+
+  galleryLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const imgSrc = link.querySelector('img').src;
+      lightboxImg.src = imgSrc;
+      location.hash = 'img-lightbox';
+    });
+  });
+
+  // Закрыть lightbox при клике вне изображения
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox || e.target.id === 'lightbox-close') {
+      location.hash = '';
+    }
+  });
+
+  // Закрыть lightbox при нажатии ESC
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && location.hash === '#img-lightbox') {
+      location.hash = '';
+    }
+  });
+</script>
 
 </body>
 </html>
