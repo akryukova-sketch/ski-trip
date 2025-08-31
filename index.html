@@ -4,7 +4,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Японский Экстрим: Культурный Фрирайд</title>
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
 <style>
   :root {
@@ -22,63 +21,151 @@
     color: var(--snow-white);
     font-family: 'Montserrat', sans-serif;
   }
-  a { color: var(--vibrant-scarlet); text-decoration: none; }
-  a:hover { color: var(--gilded-gold); }
+  a {
+    color: var(--vibrant-scarlet);
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--gilded-gold);
+  }
+
   .container {
     display: flex;
-    height: 100vh;
     max-width: 1200px;
+    height: 100vh;
     margin: 0 auto;
   }
-  .content-column {
+  .gallery-column {
+    flex: 1.2;
+    background: var(--deep-navy);
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px;
+  }
+  .photo-row-wrapper {
+    position: relative;
     flex: 1;
-    padding: 6rem 4rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .photo-row {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    scrollbar-width: none;
+    flex: 1;
+  }
+  .photo-row::-webkit-scrollbar {
+    display: none;
+  }
+  .photo-row img {
+    height: 180px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 0;
+    border: none;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+  .photo-row img:hover {
+    transform: scale(1.08);
+    z-index: 3;
+  }
+  .arrow-left, .arrow-right {
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    fill: var(--gilded-gold);
+    padding: 0;
+    user-select: none;
+  }
+  .arrow-left {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .arrow-right {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .text-column {
+    flex: 1;
+    background: transparent;
+    padding: 60px 40px 40px 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: var(--deep-navy);
-  }
-  .image-column {
-    flex: 1;
-    overflow: hidden;
-  }
-  .image-column img {
-    height: 100vh;
-    width: 100%;
-    object-fit: cover;
-    display: block;
   }
   h1 {
     font-family: 'Playfair Display', serif;
     font-weight: 900;
-    font-size: 3rem;
+    font-size: 2.8rem;
     color: var(--gilded-gold);
-    letter-spacing: 0.15em;
-    margin: 0 0 1.2rem 0;
+    margin: 0 0 30px 0;
+    letter-spacing: 0.1em;
   }
   h2 {
     font-family: 'Playfair Display', serif;
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     color: var(--snow-white);
-    margin: 1.6rem 0 1rem 0;
+    margin: 25px 0 15px 0;
   }
   p, ul {
-    font-size: 1.125rem;
-    line-height: 1.6;
-    max-width: 460px;
-    margin-bottom: 1.4rem;
+    font-size: 1.1rem;
+    color: var(--snow-white);
+    line-height: 1.5;
+    margin-bottom: 14px;
   }
   ul {
     padding-left: 24px;
   }
+  .organizers, .partners {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  .organizer-item, .partner-logo {
+    flex: 0 0 auto;
+    text-align: center;
+  }
+  .circle-img-large {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--deep-navy);
+  }
+  .organizer-name {
+    margin-top: 8px;
+    font-weight: bold;
+    color: var(--gilded-gold);
+  }
+  .organizer-role {
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+  .partner-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
   .schedule {
     display: grid;
     grid-template-columns: 3.5rem 1fr;
-    row-gap: 0.9rem;
-    column-gap: 1rem;
-    max-width: 460px;
-    margin-bottom: 2rem;
+    gap: 6px 12px;
+    max-width: 400px;
+    margin-top: 20px;
   }
   .schedule-time {
     font-family: 'Playfair Display', serif;
@@ -89,400 +176,265 @@
   .schedule-activity {
     color: var(--snow-white);
   }
-  form {
-    margin-top: 1.8rem;
-    max-width: 460px;
-    display: flex;
-    gap: 0.8rem;
-  }
-  input[type="email"] {
-    flex: 1;
-    padding: 0.88rem 1rem;
-    font-size: 1rem;
-    border: 2px solid var(--gilded-gold);
-    background: transparent;
-    color: var(--snow-white);
-    font-family: 'Montserrat', sans-serif;
-  }
-  input[type="email"]::placeholder {
-    color: #dcdcdc99;
-  }
-  input[type="submit"] {
-    padding: 0.88rem 2rem;
-    font-size: 1rem;
-    font-weight: 700;
-    font-family: 'Montserrat', sans-serif;
-    background: var(--vibrant-scarlet);
-    border: none;
-    color: var(--snow-white);
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  input[type="submit"]:hover {
-    background: var(--gilded-gold);
-    color: var(--deep-navy);
-  }
-  footer {
-    margin-top: auto;
-    font-size: 0.9rem;
-    color: #ddd;
-  }
-  .photo-row-wrapper {
-    position: relative;
-    max-width: 100%;
-    margin-bottom: 30px;
-  }
-  .photo-row {
-    display: flex;
-    overflow-x: auto;
-    gap: 18px;
-    padding: 10px 54px;
-    scrollbar-width: none;
-  }
-  .photo-row::-webkit-scrollbar { display: none; }
-  .photo-row img {
-    height: 420px;
-    border-radius: 0;
-    object-fit: cover;
-    flex-shrink: 0;
-    cursor: pointer;
-    box-shadow: none;
-    border: none;
-    transition: transform 0.24s ease;
-  }
-  .photo-row img:hover {
-    transform: scale(1.04);
-    z-index: 2;
-  }
-  .arrow-left, .arrow-right {
-    position: absolute; top: 50%;
-    transform: translateY(-50%);
-    width: 42px;
-    height: 74px;
-    background: transparent;
-    border-radius: 0;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; z-index: 10;
-    opacity: 0.8;
-    transition: opacity 0.32s;
-  }
-  .arrow-left:hover, .arrow-right:hover {
-    opacity: 1;
-  }
-  .arrow-left { left: 6px; }
-  .arrow-right { right: 6px; }
-  .arrow-left svg, .arrow-right svg {
-    fill: var(--gilded-gold);
-    width: 26px; height: 26px;
-  }
-  .organizers {
-    display: flex; gap: 50px; justify-content: center;
-    margin-bottom: 40px; flex-wrap: wrap;
-  }
-  .organizer-item {
-    text-align: center;
-    max-width: 160px;
-  }
-  .circle-img-large {
-    width: 140px; height: 140px;
-    border-radius: 50%;
-    object-fit: cover;
-    box-shadow: none;
-    margin: 0 auto 12px auto;
-    background: var(--deep-navy);
-  }
-  .organizer-name {
-    font-weight: bold;
-    font-size: 1.15em;
-    color: var(--gilded-gold);
-  }
-  .organizer-role {
-    font-size: 1.02em;
-    color: #E6E6E6;
-  }
-  .partners {
-    display: flex; gap: 22px; justify-content: center;
-    margin-bottom: 40px; flex-wrap: wrap;
-  }
-  .partner-logo {
-    width: 66px; height: 66px;
-    border-radius: 50%;
-    object-fit: cover;
-    background: var(--deep-navy);
-    transition: transform 0.2s;
-  }
-  .partner-logo:hover {
-    transform: scale(1.14);
-  }
+
   .calendar-widget {
-    max-width: 390px;
-    margin: 24px auto 38px auto;
+    max-width: 400px;
+    margin-top: 30px;
     background: var(--snow-white);
-    border-radius: 0;
+    color: var(--deep-navy);
     padding: 20px;
-    color: var(--deep-navy);
+    border-radius: 0;
     font-family: 'Montserrat', sans-serif;
-    box-shadow: none;
   }
-  .calendar-widget .month-year {
-    text-align: center;
+  .month-year {
     font-weight: 700;
-    font-size: 1.2em;
-    color: var(--deep-navy);
-    margin-bottom: 8px;
-    padding: 2.5px 0 2px 0;
+    font-size: 1.3rem;
+    text-align: center;
+    margin-bottom: 10px;
   }
-  .calendar-widget .weekdays, .calendar-widget .days {
+  .weekdays, .days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     text-align: center;
     font-weight: 600;
   }
-  .calendar-widget .weekdays div {
-    font-weight: 800;
+  .weekdays div {
     color: var(--deep-navy);
-    margin-bottom: 6px;
-    font-size: 0.97em;
+    margin-bottom: 8px;
   }
-  .calendar-widget .days div {
+  .days div {
     padding: 10px 0;
-    margin: 2px 1px;
     font-weight: 600;
-    font-size: 1em;
   }
-  .calendar-widget .days div.highlight {
-    background: var(--vibrant-scarlet);
+  .highlight {
+    background-color: var(--vibrant-scarlet);
     color: var(--snow-white);
-    font-weight: bold;
-    box-shadow: none;
+    border-radius: 0;
   }
-  .calendar-widget .days div.empty { background: transparent; pointer-events: none; }
   .calendar {
-    margin: 16px 0 24px 0;
-    font-weight: bold;
-    text-align: center;
-    font-size: 1.13em;
+    font-weight: 700;
+    font-size: 1.1rem;
     color: var(--gilded-gold);
+    text-align: center;
+    margin-top: 12px;
   }
+  form {
+    margin-top: 25px;
+  }
+  input[type="email"] {
+    width: 100%;
+    max-width: 380px;
+    padding: 12px 14px;
+    border: 1px solid var(--gilded-gold);
+    font-size: 1rem;
+    background: transparent;
+    color: var(--snow-white);
+    font-family: 'Montserrat', sans-serif;
+  }
+  input[type="submit"] {
+    margin-top: 12px;
+    padding: 12px 30px;
+    background-color: var(--vibrant-scarlet);
+    border: none;
+    color: var(--snow-white);
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+  }
+  input[type="submit"]:hover {
+    background-color: var(--gilded-gold);
+    color: var(--deep-navy);
+  }
+
+  footer {
+    margin-top: 40px;
+    font-size: 0.9rem;
+    color: #ddd;
+  }
+
   @media (max-width: 960px) {
     .container {
       flex-direction: column;
       height: auto;
       margin: 0 1rem;
     }
-    .image-column {
-      height: 320px;
+    .gallery-column, .text-column {
+      flex: none;
+      width: 100%;
+      padding: 20px 10px;
     }
-    .photos-row img {
-      height: 280px;
-    }
-    h1 {
-      font-size: 1.8rem;
-    }
-    .circle-img-large {
-      width: 100px;
-      height: 100px;
-    }
-    .partner-logo {
-      width: 60px;
-      height: 60px;
+    .photo-row img {
+      height: 160px;
     }
   }
 </style>
 </head>
 <body>
-  <div class="container">
-    <div class="content-column" role="main">
 
-      <h1>Японский Экстрим:<br />Культурный Фрирайд</h1>
+<div class="container">
 
-      <div class="photo-row-wrapper">
-        <div class="arrow-left" id="arrowLeft" aria-label="Смотреть фотографии назад" tabindex="0">
-          <svg viewBox="0 0 24 24"><path d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6 6 6z" /></svg>
-        </div>
-        <div class="photo-row" id="photoRow">
-         
-          <img src="img/Photo4.jpg" alt="Фото 4" />
-          <img src="img/Photo5.jpg" alt="Фото 5" />
-          <img src="img/Photo6.jpg" alt="Фото 6" />
-          <img src="img/Photo7.jpg" alt="Фото 7" />
-          <img src="img/Photo8.jpg" alt="Фото 8" />
-          <img src="img/Photo9.jpg" alt="Фото 9" />
-          <img src="img/Photo10.jpg" alt="Фото 10" />
-          <img src="img/Photo11.jpg" alt="Фото 11" />
-          <img src="img/Photo12.jpg" alt="Фото 12" />
-          <img src="img/Photo13.jpg" alt="Фото 13" />
-        </div>
-        <div class="arrow-right" id="arrowRight" aria-label="Смотреть фотографии вперед" tabindex="0">
-          <svg viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6z" /></svg>
-        </div>
+  <div class="gallery-column">
+    <div class="photo-row-wrapper">
+      <button class="arrow-left" id="arrowLeft" aria-label="Назад">
+        <svg viewBox="0 0 24 24"><path d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+      </button>
+      <div class="photo-row" id="photoRow" tabindex="0">
+       
+        <img src="img/Photo4.jpg" alt="Фото 4" />
+        <img src="img/Photo5.jpg" alt="Фото 5" />
+        <img src="img/Photo6.jpg" alt="Фото 6" />
+        <img src="img/Photo7.jpg" alt="Фото 7" />
+        <img src="img/Photo8.jpg" alt="Фото 8" />
+        <img src="img/Photo9.jpg" alt="Фото 9" />
+        <img src="img/Photo10.jpg" alt="Фото 10" />
+        <img src="img/Photo11.jpg" alt="Фото 11" />
+        <img src="img/Photo12.jpg" alt="Фото 12" />
+        <img src="img/Photo13.jpg" alt="Фото 13" />
       </div>
-
-      <section>
-        <h2>Организаторы</h2>
-        <div class="organizers">
-          <div class="organizer-item">
-            <img src="img/Photo2.jpg" alt="Анна Крюкова" class="circle-img-large" />
-            <div class="organizer-name">Анна Крюкова</div>
-            <div class="organizer-role">Инструктор НЛИ уровень Б (лыжи)</div>
-          </div>
-          <div class="organizer-item">
-            <img src="img/Photo14.jpg" alt="Елизавета Касьянова" class="circle-img-large" />
-            <div class="organizer-name">Елизавета Касьянова</div>
-            <div class="organizer-role">Инструктор НЛИ уровень Б (сноуборд)</div>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h2>Партнёры</h2>
-        <div class="partners">
-          <img src="img/partner1logo.png" alt="Партнер 1" class="partner-logo" />
-          <img src="img/partner2logo.png" alt="Партнер 2" class="partner-logo" />
-        </div>
-      </section>
-
-      <h2>О регионе катания — остров Хоккайдо</h2>
-      <p>
-        Средняя толщина снежного покрова: около 10 метров за зимний сезон.<br />
-        Количество курортов: более 20, включая Нисеко, Кироро, Рисуцу.<br />
-        Средний перепад высот: 300-1200 метров.<br />
-        Хоккайдо — северный остров Японии с богатой природой и гостеприимными жителями.
-      </p>
-
-      <h2>Ключевые пункты программы</h2>
-      <ul>
-        <li>Количество человек в группе: от 5</li>
-        <li>Количество гидов: 2</li>
-        <li>Проживание: Большой уютный дом в Нисеко</li>
-        <li>Места катания: Нисеко Виладж, Хирафу, Аннупури, Ханазоно, Кироро, Рисуцу</li>
-        <li>Стоимость: 6000 USD</li>
-      </ul>
-
-      <h2>Запланированные активности (входят в стоимость)</h2>
-      <ul>
-        <li>Лучшие рестораны азиатской кухни</li>
-        <li>Мастер-классы японской кухни</li>
-        <li>Поездка в Саппоро</li>
-        <li>Купание в горячих источниках онсен</li>
-      </ul>
-
-      <h2>Дополнительные активности (не входят в стоимость)</h2>
-      <ul>
-        <li>Фрирайд на ратраке</li>
-        <li>Молочная ферма Кобо</li>
-        <li>Лучшая итальянская выпечка</li>
-        <li>Дегустация виски</li>
-      </ul>
-
-      <h2>Примерный распорядок дня</h2>
-      <div class="schedule">
-        <div class="schedule-time">7:30</div>
-        <div class="schedule-activity">Подъем</div>
-        <div class="schedule-time">7:45–8:00</div>
-        <div class="schedule-activity">Завтрак</div>
-        <div class="schedule-time">8:30</div>
-        <div class="schedule-activity">Зарядка</div>
-        <div class="schedule-time">9:00</div>
-        <div class="schedule-activity">Выход на курорт</div>
-        <div class="schedule-time">10:00–16:00</div>
-        <div class="schedule-activity">Катание</div>
-        <div class="schedule-time">13:00</div>
-        <div class="schedule-activity">Обед на склоне</div>
-        <div class="schedule-time">16:30</div>
-        <div class="schedule-activity">Возвращение домой</div>
-        <div class="schedule-time">17:00–18:00</div>
-        <div class="schedule-activity">Онсен</div>
-        <div class="schedule-time">19:00</div>
-        <div class="schedule-activity">Ужин</div>
-        <div class="schedule-time">21:00</div>
-        <div class="schedule-activity">Караоке</div>
-      </div>
-
-      <h2>Календарь выездов — январь 2026</h2>
-      <div class="calendar-widget">
-        <div class="month-year">Январь 2026</div>
-        <div class="weekdays">
-          <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
-        </div>
-        <div class="days">
-          <div class="empty"></div>
-          <div class="empty"></div>
-          <div class="empty"></div>
-          <div class="empty"></div>
-          <div>1</div>
-          <div>2</div>
-          <div>3</div>
-          <div>4</div>
-          <div>5</div>
-          <div>6</div>
-          <div>7</div>
-          <div>8</div>
-          <div>9</div>
-          <div>10</div>
-          <div>11</div>
-          <div>12</div>
-          <div>13</div>
-          <div>14</div>
-          <div class="highlight">15</div>
-          <div class="highlight">16</div>
-          <div class="highlight">17</div>
-          <div class="highlight">18</div>
-          <div class="highlight">19</div>
-          <div class="highlight">20</div>
-          <div class="highlight">21</div>
-          <div class="highlight">22</div>
-          <div>23</div>
-          <div>24</div>
-          <div>25</div>
-          <div>26</div>
-          <div>27</div>
-          <div>28</div>
-          <div>29</div>
-          <div>30</div>
-          <div>31</div>
-        </div>
-      </div>
-      <div class="calendar">Даты выезда: 15–22 января 2026</div>
-
-      <h2>Заявка на участие</h2>
-      <form>
-        <label for="email">Введите ваш email:</label><br />
-        <input type="email" id="email" name="email" placeholder="example@mail.com" required />
-        <input type="submit" value="Отправить" />
-      </form>
-
-      <footer>
-        <p>Контакты:<br />Телефон: +7 926 616 79 15<br />Адрес: г. Москва, Карамышевская наб. 48-3-78</p>
-      </footer>
-    </div>
-
-    <div class="image-column" aria-hidden="true">
-      <img src="img/Photo1.jpg" alt="Японский Экстрим фрирайд Хоккайдо" />
+      <button class="arrow-right" id="arrowRight" aria-label="Вперед">
+        <svg viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+      </button>
     </div>
   </div>
 
-  <script>
-    const photoRow = document.getElementById('photoRow');
-    const arrowLeft = document.getElementById('arrowLeft');
-    const arrowRight = document.getElementById('arrowRight');
-    const scrollAmount = 320;
-    arrowLeft.addEventListener('click', () => {
-      photoRow.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  <div class="text-column" role="main">
+
+    <h1>Японский Экстрим:<br />Культурный Фрирайд</h1>
+
+    <section>
+      <h2>Организаторы</h2>
+      <div class="organizers">
+        <div class="organizer-item">
+          <img src="img/Photo2.jpg" alt="Анна Крюкова" class="circle-img-large" />
+          <div class="organizer-name">Анна Крюкова</div>
+          <div class="organizer-role">Инструктор НЛИ уровень Б (лыжи)</div>
+        </div>
+        <div class="organizer-item">
+          <img src="img/Photo14.jpg" alt="Елизавета Касьянова" class="circle-img-large" />
+          <div class="organizer-name">Елизавета Касьянова</div>
+          <div class="organizer-role">Инструктор НЛИ уровень Б (сноуборд)</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Партнёры</h2>
+      <div class="partners">
+        <img src="img/partner1logo.png" alt="Партнер 1" class="partner-logo" />
+        <img src="img/partner2logo.png" alt="Партнер 2" class="partner-logo" />
+      </div>
+    </section>
+
+    <h2>О регионе катания — остров Хоккайдо</h2>
+    <p>
+      Средняя толщина снежного покрова: около 10 метров за зимний сезон.<br />
+      Количество курортов: более 20, включая Нисеко, Кироро, Рисуцу.<br />
+      Средний перепад высот: 300-1200 метров.<br />
+      Хоккайдо — северный остров Японии с богатой природой и гостеприимными жителями.
+    </p>
+
+    <h2>Ключевые пункты программы</h2>
+    <ul>
+      <li>Количество человек в группе: от 5</li>
+      <li>Количество гидов: 2</li>
+      <li>Проживание: Большой уютный дом в Нисеко</li>
+      <li>Места катания: Нисеко Виладж, Хирафу, Аннупури, Ханазоно, Кироро, Рисуцу</li>
+      <li>Стоимость: 6000 USD</li>
+    </ul>
+
+    <h2>Запланированные активности (входят в стоимость)</h2>
+    <ul>
+      <li>Лучшие рестораны азиатской кухни</li>
+      <li>Мастер-классы японской кухни</li>
+      <li>Поездка в Саппоро</li>
+      <li>Купание в горячих источниках онсен</li>
+    </ul>
+
+    <h2>Дополнительные активности (не входят в стоимость)</h2>
+    <ul>
+      <li>Фрирайд на ратраке</li>
+      <li>Молочная ферма Кобо</li>
+      <li>Лучшая итальянская выпечка</li>
+      <li>Дегустация виски</li>
+    </ul>
+
+    <h2>Примерный распорядок дня</h2>
+    <div class="schedule">
+      <div class="schedule-time">7:30</div>
+      <div class="schedule-activity">Подъем</div>
+      <div class="schedule-time">7:45–8:00</div>
+      <div class="schedule-activity">Завтрак</div>
+      <div class="schedule-time">8:30</div>
+      <div class="schedule-activity">Зарядка</div>
+      <div class="schedule-time">9:00</div>
+      <div class="schedule-activity">Выход на курорт</div>
+      <div class="schedule-time">10:00–16:00</div>
+      <div class="schedule-activity">Катание</div>
+      <div class="schedule-time">13:00</div>
+      <div class="schedule-activity">Обед на склоне</div>
+      <div class="schedule-time">16:30</div>
+      <div class="schedule-activity">Возвращение домой</div>
+      <div class="schedule-time">17:00–18:00</div>
+      <div class="schedule-activity">Онсен</div>
+      <div class="schedule-time">19:00</div>
+      <div class="schedule-activity">Ужин</div>
+      <div class="schedule-time">21:00</div>
+      <div class="schedule-activity">Караоке</div>
+    </div>
+
+    <h2>Календарь выездов — январь 2026</h2>
+    <div class="calendar-widget">
+      <div class="month-year">Январь 2026</div>
+      <div class="weekdays">
+        <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
+      </div>
+      <div class="days">
+        <div class="empty"></div><div class="empty"></div><div class="empty"></div><div class="empty"></div>
+        <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div>
+        <div>9</div><div>10</div><div>11</div><div>12</div><div>13</div><div>14</div>
+        <div class="highlight">15</div><div class="highlight">16</div><div class="highlight">17</div><div class="highlight">18</div>
+        <div class="highlight">19</div><div class="highlight">20</div><div class="highlight">21</div><div class="highlight">22</div>
+        <div>23</div><div>24</div><div>25</div><div>26</div><div>27</div><div>28</div><div>29</div><div>30</div><div>31</div>
+      </div>
+    </div>
+    <div class="calendar">Даты выезда: 15–22 января 2026</div>
+
+    <h2>Заявка на участие</h2>
+    <form>
+      <label for="email">Введите ваш email:</label><br />
+      <input type="email" id="email" name="email" placeholder="example@mail.com" required />
+      <input type="submit" value="Отправить" />
+    </form>
+
+    <footer>
+      <p>Контакты:<br />Телефон: +7 926 616 79 15<br />Адрес: г. Москва, Карамышевская наб. 48-3-78</p>
+    </footer>
+
+  </div>
+
+</div>
+
+<script>
+  const photoRow = document.getElementById('photoRow');
+  const arrowLeft = document.getElementById('arrowLeft');
+  const arrowRight = document.getElementById('arrowRight');
+  const scrollAmount = 320;
+  arrowLeft.addEventListener('click', () => {
+    photoRow.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  });
+  arrowRight.addEventListener('click', () => {
+    photoRow.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  });
+  [arrowLeft, arrowRight].forEach(arrow => {
+    arrow.addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        arrow.click();
+      }
     });
-    arrowRight.addEventListener('click', () => {
-      photoRow.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    });
-    [arrowLeft, arrowRight].forEach(arrow => {
-      arrow.addEventListener('keydown', e => {
-        if(e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          arrow.click();
-        }
-      });
-    });
-  </script>
+  });
+</script>
 
 </body>
 </html>
